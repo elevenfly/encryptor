@@ -58,7 +58,8 @@ int main(int argc, char *argv[])
     in_file[0]='\0';
     out_file[0]='\0';
 
-    char * key;
+    char * key, * key1, *key2;
+    size_t key_len;
 
     int opt;
 
@@ -95,8 +96,32 @@ int main(int argc, char *argv[])
     char prompt[1000];
     sprintf( prompt, "Please enter password:");
     key = getpass( prompt );
+    key_len = strlen(key);
+
+    if (key_len == 0) {
+        fprintf(stderr, "password length must be greater than 0\n");
+        exit(EXIT_FAILURE);
+    }
+
+
+    key1 = malloc(sizeof(char) * (strlen(key) + 10 ));
+    strcpy( key1, key );
+
+    sprintf( prompt, "Please enter password again:");
+    key = getpass( prompt );
+    key2 = malloc(sizeof(char) * (strlen(key) + 10 ));
+    strcpy( key2, key );
+
+    if ( strcmp(key1,key2) != 0 ) {
+        fprintf(stderr, "password must be the same\n");
+        exit(EXIT_FAILURE);
+    }
 
     my_encrypt( in_file, out_file, key );
 
+    free(key1);
+    free(key2);
+
     return 0;
 }
+
