@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     }
 
     char prompt[1000];
-    sprintf( prompt, "Please enter password (maximum length is %d):" ,PASS_MAX -1 );
+    sprintf( prompt, "Please enter password:");
     key = getpass( prompt );
 
     my_encrypt( in_file, out_file, key );
